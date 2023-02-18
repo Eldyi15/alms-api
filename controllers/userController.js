@@ -28,6 +28,9 @@ const signToken = (id) => {
 exports.createUser = catchAsync(async (req, res, next) => {
   // const {user,body} = req
 
+  req.body["password"] = "ALMS1234!";
+  req.body["passwordConfirm"] = "ALMS1234!";
+
   const createdUser = await UserModel.create(req.body);
   const token = signToken(createdUser._id);
 
@@ -73,5 +76,25 @@ exports.getUsers = catchAsync(async (req, res, next) => {
     env: {
       users,
     },
+  });
+});
+
+exports.getuserCounts = catchAsync(async (req, res, next) => {
+  const users = await UserModel.aggregate([
+    {
+      $match: {
+        user_type: "user",
+      },
+    },
+    {
+      $group: {
+        _id: "$status",
+        count: { $sum: 1 },
+      },
+    },
+  ]);
+  res.status(200).json({
+    status: "success",
+    users,
   });
 });

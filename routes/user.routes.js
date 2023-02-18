@@ -13,5 +13,6 @@ router.get("/", userController.getUsers);
 router.use(authenticate);
 
 router.post("/create-user", userController.createUser);
+router.get("/user-counts", userController.getuserCounts);
 
 module.exports = router;
