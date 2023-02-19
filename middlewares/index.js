@@ -5,7 +5,7 @@ const { DB_SCHEMAS } = require("./../constants/index");
 exports.init = (app) => {
   app.use(
     cors({
-      origin: ["http://localhost:4200"],
+      origin: ["http://localhost:4200", "https://alms.onrender.com"],
       methods: ["POST", "PATCH", "PUT", "DELETE", "GET"],
     })
   );
