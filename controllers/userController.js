@@ -98,3 +98,12 @@ exports.getuserCounts = catchAsync(async (req, res, next) => {
     users,
   });
 });
+
+exports.updateUser = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const user = await UserModel.findByIdAndUpdate(id, req.body);
+  res.status(201).json({
+    status: "success",
+    user,
+  });
+});
