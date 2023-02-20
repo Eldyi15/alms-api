@@ -9,13 +9,39 @@ class QueryFeatures {
     const excludedFields = ["page", "sort", "limit", "fields"];
     excludedFields.forEach((el) => delete queryObj[el]);
 
+    let $or = [];
+    if (queryObj.searchVal && queryObj.searchFields) {
+      let val = queryObj.searchVal;
+      const fields = queryObj.searchFields.split(",");
+
+      fields.forEach((field) => {
+        $or.push({
+          [field]: {
+            $regex: `.*${val.toString()}.*`,
+            $options: "i",
+          },
+        });
+      });
+
+      delete queryObj.searchVal;
+      delete queryObj.searchFields;
+      // console.log($or);
+    }
+
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(
       /\b(gte|gt|lte|lt|ne)\b/g,
       (match) => `$${match}`
     );
 
-    this.query.find(JSON.parse(queryStr));
+    let newQryObj = JSON.parse(queryStr);
+
+    if ($or.length) {
+      newQryObj = { ...newQryObj, $or };
+    }
+    console.log(newQryObj);
+
+    this.query.find(newQryObj);
     return this;
   }
   sort() {
