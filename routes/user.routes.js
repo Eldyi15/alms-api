@@ -15,6 +15,9 @@ router.use(authenticate);
 router.post("/create-user", userController.createUser);
 router.get("/user-counts", userController.getuserCounts);
 
-router.route("/:id").patch(userController.updateUser);
+router
+  .route("/:id")
+  .patch(userController.updateUser)
+  .delete(userController.deleteUser);
 
 module.exports = router;

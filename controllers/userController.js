@@ -107,3 +107,11 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     user,
   });
 });
+
+exports.deleteUser = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  await UserModel.findByIdAndDelete(id);
+  res.status(201).json({
+    status: "success",
+  });
+});
