@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enums: ["Registered", "Verified"],
+      enums: ["Registered", "Verified", "Deleted"],
       default: "Registered",
     },
     user_type: {
