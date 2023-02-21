@@ -64,10 +64,7 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.getUsers = catchAsync(async (req, res, next) => {
-  const userQuery = new QueryFeatures(
-    UserModel.find({ status: { $ne: "Deleted" } }),
-    req.query
-  )
+  const userQuery = new QueryFeatures(UserModel.find({}), req.query)
     .filter()
     .sort()
     .limitFields()
@@ -87,7 +84,6 @@ exports.getuserCounts = catchAsync(async (req, res, next) => {
     {
       $match: {
         user_type: "user",
-        status: { $ne: "Deleted" },
       },
     },
     {
@@ -114,7 +110,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
   const { id } = req.params;
-  await UserModel.findByIdAndUpdate(id, { status: "Deleted" });
+  await UserModel.findByIdAndDelete(id);
   res.status(201).json({
     status: "success",
   });
