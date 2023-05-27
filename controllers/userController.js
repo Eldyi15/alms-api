@@ -53,6 +53,9 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!email || !password)
     next(new appError("Please provide email and password"), 400);
 
+
+    let collection = UserModel
+    if(req?.params?.project === 'librayr') collection = LibraryUser
   const user = await UserModel.findOne({ email }).select("+password");
   const isMatch = user.comparePassword(password, user.password);
   if (!user || !isMatch) {

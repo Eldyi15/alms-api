@@ -7,6 +7,7 @@ const { authenticate } = require("../controllers/authenticate");
 // router.post('create-user')
 
 router.post("/login-user", userController.login);
+router.post("/login-user/:project", userController.login);
 
 router.get("/", userController.getUsers);
 
