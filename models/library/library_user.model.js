@@ -3,11 +3,7 @@ const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema(
   {
-    user_name: {
-      type: String,
-      required: [true, "Please provide username"],
-      unique: true,
-    },
+   
     last_name: {
       type: String,
       required: [true, "Please provide last name"],
@@ -24,7 +20,6 @@ const userSchema = new mongoose.Schema(
     },
     birthdate: {
       type: Date,
-      required: [true, "Please provide birthdate"],
     },
     gender: {
       type: String,
@@ -46,8 +41,8 @@ const userSchema = new mongoose.Schema(
     },
     user_type: {
       type: String,
-      enums: ["user", "admin", "super-admin"],
-      default: "super-admin",
+      enums: ["user", "admin"],
+      default: "admin",
     },
     password: {
       type: String,
@@ -100,5 +95,5 @@ userSchema.methods.changePasswordAfter = function (JWTTimeStamp) {
   }
 };
 
-const User = mongoose.model("Users", userSchema);
-module.exports = User;
+const LibraryUser = mongoose.model("LibraryUsers", userSchema);
+module.exports = LibraryUser;

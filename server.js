@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require("mongoose");
 const errorController = require("./controllers/errorController");
 const middlewares = require("./middlewares/index");
+const cors = require('cors')
 
 const router = require("./routes/index");
 
@@ -16,6 +17,9 @@ app.use(
     extended: true,
   })
 );
+app.use(cors({
+  origin: '*' // allowed domain
+}));
 
 middlewares.init(app);
 router.init(app);

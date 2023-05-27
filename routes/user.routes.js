@@ -10,6 +10,8 @@ router.post("/login-user", userController.login);
 
 router.get("/", userController.getUsers);
 
+
+router.post("/create-user/:type/:userType", userController.createUser);
 router.use(authenticate);
 
 router.post("/create-user", userController.createUser);

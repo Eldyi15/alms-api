@@ -4,6 +4,7 @@ const UserModel = require("./../models/user.model");
 const QueryFeatures = require("./../utils/query/QueryFeature");
 
 const jwt = require("jsonwebtoken");
+const LibraryUser = require("../models/library/library_user.model");
 exports.signup = catchAsync(async (req, res, next) => {
   console.log(req.body, "BODY");
   const newUser = await User.create(req.body);
@@ -27,11 +28,18 @@ const signToken = (id) => {
 
 exports.createUser = catchAsync(async (req, res, next) => {
   // const {user,body} = req
+let collection 
 
+  if(!req.params?.type && !req.params?.userType){
+    collection = UserModel
   req.body["password"] = "ALMS1234!";
-  req.body["passwordConfirm"] = "ALMS1234!";
+  req.body["passwordConfirm"] = "ALMS1234!";}
+  else{
+    req.body['user_type'] = req.params.userType
+    collection = LibraryUser
+  }
 
-  const createdUser = await UserModel.create(req.body);
+  const createdUser = await collection.create(req.body);
   const token = signToken(createdUser._id);
 
   res.status(200).json({
@@ -46,13 +54,13 @@ exports.login = catchAsync(async (req, res, next) => {
     next(new appError("Please provide email and password"), 400);
 
   const user = await UserModel.findOne({ email }).select("+password");
-  console.log(user);
   const isMatch = user.comparePassword(password, user.password);
   if (!user || !isMatch) {
     next(new appError("Incorrect email or password"), 401);
   }
   //   console.log(user);
   const token = signToken(user._id);
+  const refreshToken = signToken(user._id)
 
   user["password"] = undefined;
 
@@ -60,6 +68,7 @@ exports.login = catchAsync(async (req, res, next) => {
     status: "success",
     user,
     token,
+    refreshToken
   });
 });
 
