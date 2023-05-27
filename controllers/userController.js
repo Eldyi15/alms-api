@@ -57,9 +57,9 @@ exports.login = catchAsync(async (req, res, next) => {
     let collection = UserModel
     if(req?.params?.project === 'library') collection = LibraryUser
   const user = await collection.findOne({ email }).select("+password");
-  const isMatch = user.comparePassword(password, user.password);
+  const isMatch = await user.comparePassword(password, user.password);
   if (!user || !isMatch) {
-    next(new appError("Incorrect email or password"), 401);
+    next(new appError("Incorrect email or password"), 404);
   }
   //   console.log(user);
   const token = signToken(user._id);
