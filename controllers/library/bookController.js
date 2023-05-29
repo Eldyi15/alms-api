@@ -27,14 +27,18 @@ exports.getBooks = catchAsync(async(req,res,next)=>{
                       '_id': null, 
                       'rating': {
                         '$avg': '$ratings'
-                      }
+                      },
+                      'reviews':{$sum:1}
                     }
                   }, {
                     '$unset': '_id'
                   }
             ]
         )
-        book['ratings'] = ratings.length ?( ratings[0]?.rating || 0 ): 0
+        const rating = ratings.length ? ratings[0] : undefined
+        console.log(rating)
+        book['ratings'] = rating?.rating || 0
+        book['review'] = rating?.reviews ||0
     }
    
     

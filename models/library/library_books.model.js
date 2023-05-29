@@ -24,7 +24,8 @@ const BookSchema = new mongoose.Schema(
         author:{
             type:String,
         },
-        ratings:Number
+        ratings:Number,
+        review:Number
       
     },
     { timestamps: true }
