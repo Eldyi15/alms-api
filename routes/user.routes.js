@@ -13,7 +13,7 @@ router.get("/", userController.getUsers);
 
 
 router.post("/create-user/:type/:userType", userController.createUser);
-router.use(authenticate);
+// router.use(authenticate);
 
 router.post("/create-user", userController.createUser);
 router.get("/user-counts", userController.getuserCounts);

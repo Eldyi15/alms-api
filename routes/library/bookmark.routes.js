@@ -6,5 +6,6 @@ const { authenticate } = require("../../controllers/authenticate");
 router.use(authenticate)
 
 router.post('/',bookmarkController.upsertBookmark)
+router.post('/get',bookmarkController.getBookmarks)
 
 module.exports = router;

@@ -56,6 +56,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
     let collection = UserModel
     if(req?.params?.project === 'library') collection = LibraryUser
+    console.log(collection,'Collection')
   const user = await collection.findOne({ email }).select("+password");
   const isMatch = await user.comparePassword(password, user.password);
   if (!user || !isMatch) {

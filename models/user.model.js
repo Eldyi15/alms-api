@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema(
     },
     birthdate: {
       type: Date,
-      required: [true, "Please provide birthdate"],
+      // required: [true, "Please provide birthdate"],
     },
     gender: {
       type: String,
