@@ -11,7 +11,7 @@ const BookSchema = new mongoose.Schema(
            
         },
         pdfUrl:{
-            type:String,
+            type:Object,
        
         },
         bookThumbnailImg:{
