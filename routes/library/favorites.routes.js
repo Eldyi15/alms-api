@@ -5,7 +5,7 @@ const favoriteController = require('./../../controllers/library/favoritesControl
 const { authenticate } = require("../../controllers/authenticate");
 router.use(authenticate)
 
-router.post('/',favoriteController.getFavorites).delete(favoriteController.removeFavorites)
+router.post('/',favoriteController.getFavorites).delete('/',favoriteController.removeFavorites)
 router.post('/add',favoriteController.addFavorites)
 
 
