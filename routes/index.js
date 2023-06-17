@@ -5,6 +5,7 @@ const BookRouter = require('./library/book.routes')
 const BookmarkRouter = require('./../routes/library/bookmark.routes')
 const ratingsRouter = require('./../routes/library/rating.routes')
 const commentsRouter = require('./../routes/library/comments.routes')
+const favoriteRouter = require('./../routes/library/favorites.routes')
 exports.init = (app) => {
   app.use("/api/v1/users", userRouter);
   app.use("/api/v1/logbooks", logBookRouter);
@@ -13,4 +14,5 @@ exports.init = (app) => {
   app.use('/api/bookmarks',BookmarkRouter)
   app.use('/api/ratings',ratingsRouter)
   app.use('/api/library/comments',commentsRouter)
+  app.use('/api/library/favorites',favoriteRouter)
 };

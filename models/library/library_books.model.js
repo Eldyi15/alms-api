@@ -16,8 +16,7 @@ const BookSchema = new mongoose.Schema(
         },
         bookThumbnailImg:{
             type:Object,
-        },
-      
+        },      
         bookThumbnailAlt:{
             type:String,
         },
