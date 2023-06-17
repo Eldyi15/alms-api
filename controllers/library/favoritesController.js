@@ -1,16 +1,16 @@
 const AppError = require('../../utils/errors/AppError');
 const catchAsync = require('../../utils/errors/catchAsync');
+const QueryFeatures = require('../../utils/query/QueryFeature');
 const favoriteModel = require('./../../models/library/favorites.model')
 
 exports.getFavorites = catchAsync(async(req,res,next)=>{
-    const {book_id,user_id}= req.body
 
-    const favorites = await favoriteModel.find(
-        {
-            book_id,
-            user_id
-        }
-    )
+
+   favQry = new QueryFeatures(favoriteModel.find({}),req.query).filter()
+   .sort()
+   .limitFields()
+   .paginate().populate()
+   favorites = await favQry.query
 
     res.status(200).json(
         {
@@ -22,10 +22,14 @@ exports.getFavorites = catchAsync(async(req,res,next)=>{
 exports.addFavorites = catchAsync(async(req,res,next)=>{
     await favoriteModel.create(req.body)
 
-    res.status(200)
+    res.status(200).json({
+        status:'success'
+    })
 })
 
 exports.removeFavorites = catchAsync(async(req,res,next)=>{
-    await favoriteModel.deleteOne({book_id,user_id})
-    res.status(200)
+    await favoriteModel.deleteMany(req.body)
+    res.status(200).json({
+        status:'success'
+    })
 })

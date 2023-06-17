@@ -76,5 +76,53 @@ class QueryFeatures {
 
     return this;
   }
+  populate() {
+    const populateDB = this.queryString.populate;
+    const field = this.queryString.popField;
+
+    if (populateDB) {
+      if (Array.isArray(populateDB)) {
+        for (let [index, populate] of populateDB.entries()) {
+          const select = Array.isArray(field)
+            ? // if field is array
+              field[index]
+              ? // if field[index] is not undefined
+                field[index].split(',').join(' ')
+              : // use field[0] if field[index] is undefined
+                field[0].split(',').join(' ')
+            : // if field is not array
+              field && field.split(',').join(' ');
+
+          this.query = this.query.populate({
+            path: populate,
+            select,
+          });
+        }
+      } else {
+        if (Array.isArray(field)) {
+          const select = [];
+
+          for (let key of field) {
+            const currentKey = key.split(',');
+
+            for (let str of currentKey)
+              if (!select.includes(str)) select.push(str);
+          }
+
+          this.query = this.query.populate({
+            path: populateDB,
+            select: select.join(' '),
+          });
+        } else {
+          this.query = this.query.populate({
+            path: populateDB,
+            select: field && field.split(',').join(' '),
+          });
+        }
+      }
+    }
+
+    return this;
+  }
 }
 module.exports = QueryFeatures;
