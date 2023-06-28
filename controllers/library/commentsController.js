@@ -5,7 +5,7 @@ const commentModel = require('./../../models/library/comments.model')
 exports.getComments = catchAsync(async(req,res,next)=>{
     const {bookId} = req.params
 const comments = await commentModel.find({
-    bookId
+    book_id:bookId
 }).sort({createdAt:-1}).populate('user_id',['email'])
 
 res.status(200).json(
