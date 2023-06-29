@@ -49,6 +49,7 @@ const userSchema = new mongoose.Schema(
       enums: ["user", "admin", "super-admin"],
       default: "super-admin",
     },
+    faceId:Object,
     password: {
       type: String,
       select: false,
