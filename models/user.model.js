@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema(
   {
     user_name: {
       type: String,
-      required: [true, "Please provide username"],
+      // required: [true, "Please provide username"],
       unique: true,
     },
     last_name: {
@@ -41,13 +41,13 @@ const userSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enums: ["Registered", "Verified", "Deleted"],
-      default: "Registered",
+      enums: ["Professor", "Student", "Deleted"],
+      default: "Student",
     },
     user_type: {
       type: String,
       enums: ["user", "admin", "super-admin"],
-      default: "super-admin",
+      default: "user",
     },
     faceId:Object,
     password: {
