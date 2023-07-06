@@ -94,11 +94,7 @@ exports.getUsers = catchAsync(async (req, res, next) => {
 
 exports.getuserCounts = catchAsync(async (req, res, next) => {
   const users = await UserModel.aggregate([
-    {
-      $match: {
-        user_type: "user",
-      },
-    },
+   
     {
       $group: {
         _id: "$status",
