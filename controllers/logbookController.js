@@ -12,21 +12,21 @@ exports.createLogs = catchAsync(async (req, res, next) => {
 });
 
 exports.aggregateLogs = catchAsync(async (req, res, next) => {
-  const { date } = req.body;
+  const { startDate, endDate } = req.body;
 
-  let startDate = new Date(new Date(date).setHours(0, 0, 0, 0));
-  let endDate = new Date(new Date(date).setHours(23, 59, 59, 999));
-  console.log(startDate, endDate);
+  // let startDate = new Date(new Date(date).setHours(0, 0, 0, 0));
+  // let endDate = new Date(new Date(date).setHours(23, 59, 59, 999));
+  console.log(new Date(startDate), new Date(endDate));
 
   const initialQuery = [
     {
       $match: {
         $and: [
           {
-            loggedDate: { $gte: startDate },
+            loggedDate: { $gte: new Date(startDate) },
           },
           {
-            loggedDate: { $lte: endDate },
+            loggedDate: { $lte: new Date(endDate) },
           },
         ],
       },
